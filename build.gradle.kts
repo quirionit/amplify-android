@@ -84,6 +84,12 @@ subprojects {
 
     tasks.withType<Test>().configureEach {
         enabled = false
+
+        testLogging {
+            events("passed", "skipped", "failed")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            showStandardStreams = true
+        }
     }
 
     apply(plugin = "app.cash.licensee")
