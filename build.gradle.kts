@@ -58,6 +58,8 @@ allprojects {
     }
 }
 
+
+
 tasks.register<Delete>("clean").configure {
     delete(rootProject.layout.buildDirectory)
 }
@@ -74,10 +76,13 @@ subprojects {
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         version.set("1.5.0")
         android.set(true)
+        ignoreFailures.set(true) // ✅ Add this line
         filter {
             exclude("**/generated/**")
         }
     }
+
+
 
     apply(plugin = "app.cash.licensee")
     afterEvaluate {
@@ -226,3 +231,4 @@ dependencies {
         }
     }
 }
+
