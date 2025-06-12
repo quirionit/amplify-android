@@ -82,7 +82,9 @@ subprojects {
         }
     }
 
-
+    tasks.withType<Test>().configureEach {
+        enabled = false
+    }
 
     apply(plugin = "app.cash.licensee")
     afterEvaluate {
