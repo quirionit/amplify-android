@@ -30,6 +30,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.category.CategoryType;
 import com.amplifyframework.core.model.Model;
 import com.amplifyframework.core.model.ModelSchema;
+import com.amplifyframework.core.model.query.predicate.QueryField;
 import com.amplifyframework.core.model.query.predicate.QueryPredicate;
 import com.amplifyframework.core.model.query.predicate.QueryPredicateGroup;
 import com.amplifyframework.core.model.query.predicate.QueryPredicates;
@@ -125,6 +126,11 @@ final class AppSyncRequestFactory {
                     // group is of type AND, the optimization will occur.  If the top level group is OR or NOT, the
                     // optimization is not possible anyway.
                     syncPredicate = QueryPredicateGroup.andOf(syncPredicate);
+                }
+                if (lastSync == null) {
+                    syncPredicate = syncPredicate.and(
+                            QueryField.field("_deleted").ne(true)
+                    );
                 }
                 builder.variable(
                         "filter",
